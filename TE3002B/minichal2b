@@ -1,0 +1,50 @@
+# Importar librerías necesarias
+import time
+
+# Variables del controlador PID
+dt = 0.02
+tiempo = 0
+vel = 0
+VMotor = 0
+valorM = 0
+referencia = 0
+
+# e[0] error actual, e[1] error anterior, e[2] error dos veces anterior
+e = [0.0, 0.0, 0.0]
+# u[0] salida actual, u[1] salida anterior
+u = [0.0, 0.0]
+# ganancias del controlador del modelo continuo
+kp = 1.4
+ki = 3.0
+kd = 0.05
+# periodo del muestreo
+Ts = 0.02
+# ganancias del modelo discreto
+k1 = kp + Ts * ki + kd / Ts
+k2 = -kp - 2.0 * kd / Ts
+k3 = kd / Ts
+
+# Configuración de puertos E/S y de interrupciones
+def setup():
+    global kp, ki, kd, Ts, k1, k2, k3
+    # Discretizar el PID
+    kp = 1.4
+    ki = 3.0
+    kd = 0.05
+    Ts = 0.02 # 20 milisegundos
+    # Ganancias del modelo discreto
+    k1 = kp + Ts * ki + kd / Ts
+    k2 = -kp - 2.0 * kd / Ts
+    k3 = kd / Ts
+
+# Función principal del programa
+def main():
+    global tiempo , vel
+    while True:
+        # Línea de tiempo se usa para controlar el tiempo de muestreo
+        if (time.time() - tiempo > 0.02):
+            tiempo = time.time()
+            # Calcular RPM, grados por segundo o rad por segundo
+
+setup()
+main()
